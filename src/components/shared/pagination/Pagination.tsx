@@ -36,7 +36,7 @@ const Pagination: FC<PaginationProps> = ({
         disabled={currentPage === 1}
         className={`p-4 rounded-full border ${
           currentPage === 1
-            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+            ? "bg-none text-gray-400 cursor-not-allowed"
             : "bg-white text-blue-600 font-bold hover:bg-gray-100 cursor-pointer"
         }`}
       >
@@ -50,7 +50,7 @@ const Pagination: FC<PaginationProps> = ({
           onClick={() => onPageChange(page)}
           className={`px-4 py-2 rounded-full border ${
             page === currentPage
-              ? "bg-gray-300 text-gray-600 font-bold cursor-not-allowed"
+              ? "bg-gray-300 text-gray-600 font-bold cursor-not-allowed px-6 py-4"
               : "bg-white text-blue-600 hover:bg-gray-100 cursor-pointer"
           }`}
         >
@@ -64,7 +64,7 @@ const Pagination: FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         className={`p-4 rounded-full border ${
           currentPage === totalPages
-            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+            ? "bg-none text-gray-400 cursor-not-allowed"
             : "bg-white text-blue-600 font-bold hover:bg-gray-100 cursor-pointer"
         }`}
       >

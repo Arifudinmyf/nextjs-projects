@@ -74,7 +74,7 @@ export default function UserList() {
   }, [data]);
 
   if (loading) return <p>Loading users...</p>;
-  if (error) return <p className="text-red-500">Error: {String(error)}</p>;
+  if (error) return <p className="text-red-500">Error: {JSON.stringify(error)}</p>;
 
   return (
     <div className="p-4">

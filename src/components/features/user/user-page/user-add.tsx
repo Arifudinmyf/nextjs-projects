@@ -44,7 +44,7 @@ export default function AddUserForm() {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p className="text-red-500">Error: {String(error)}</p>;
+  if (error) return <p className="text-red-500">Error: {JSON.stringify(error)}</p>;
 
   return (
     <div className="max-w-md mx-auto p-4">

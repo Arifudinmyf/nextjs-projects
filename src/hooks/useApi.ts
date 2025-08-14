@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "@/libs/api";
-import { ResponseData } from "@/type/responseData";
 import { useState, useCallback } from "react";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
@@ -48,7 +47,7 @@ export function useFetch<TRequest = unknown, TData = unknown>(
                     url: finalUrl,
                     method: override?.method || method,
                     params: override?.params || params,
-                    ...(finalMethod !== "GET" ? { data: override?.req as TData | undefined || req as TData | undefined } : {})
+                    ...(finalMethod !== "GET" ? { data: override?.req as TData | undefined } : {})
                 });
 
                 setData(res.data);

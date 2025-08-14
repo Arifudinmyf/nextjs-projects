@@ -1,12 +1,17 @@
 "use client";
 
-import { FC } from "react";
 import SortButton from "../sort/SortHeader";
 import Pagination from "../pagination/Pagination";
 
+interface TableColumn<T> {
+  key: keyof T;
+  label: string;
+  sortable?: boolean;
+}
+
 interface TableProps<T> {
   data: T[];
-  columns: { key: keyof T; label: string }[];
+  columns: TableColumn<T>[];
   currentSortField: string | null;
   currentOrder: "asc" | "desc" | null;
   onSortChange: (field: string | null, order: "asc" | "desc" | null) => void;
@@ -31,13 +36,23 @@ const TableShared = <T extends object>({
         <thead className="bg-gray-400">
           <tr>
             {columns.map((col) => (
-              <th key={String(col.key)} className="p-2 border">
-                <SortButton
-                  field={String(col.key)}
-                  currentSortField={currentSortField}
-                  currentOrder={currentOrder}
-                  onSortChange={onSortChange}
-                />
+              <th
+                key={String(col.key)}
+                className="p-2 px-6 border whitespace-nowrap"
+              >
+                <div className="flex items-center gap-1">
+                  {col.sortable && (
+                    <SortButton
+                      field={String(col.key)}
+                      label={col.label}
+                      currentSortField={currentSortField}
+                      currentOrder={currentOrder}
+                      onSortChange={onSortChange}
+                      className="w-full"
+                    />
+                  )}
+                  {!col.sortable && <span>{col.label}</span>}
+                </div>
               </th>
             ))}
           </tr>

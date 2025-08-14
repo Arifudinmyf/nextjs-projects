@@ -70,7 +70,7 @@ export default function Tables() {
   }, [data]);
 
   if (loading) return <p>Loading users...</p>;
-  if (error) return <p className="text-red-500">Error: {String(error)}</p>;
+  if (error) return <p className="text-red-500">Error: {JSON.stringify(error)}</p>;
 
   return (
     <div className="p-4">
@@ -80,9 +80,9 @@ export default function Tables() {
       <TableShared
         data={data?.users || []}
         columns={[
-          { key: "firstName", label: "First Name" },
+          { key: "firstName", label: "First Name", sortable: true },
           { key: "lastName", label: "Last Name" },
-          { key: "email", label: "Email" },
+          { key: "email", label: "Email", sortable: true },
         ]}
         currentSortField={sortField}
         currentOrder={order}
