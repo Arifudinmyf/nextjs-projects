@@ -13,43 +13,60 @@ export default function UserList() {
   // Ambil query dari URL
   const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
   const [limit] = useState(Number(searchParams.get("limit")) || 5);
-  const [sortField, setSortField] = useState(searchParams.get("sortBy") || "firstName");
-  const [order, setOrder] = useState<"asc" | "desc">(
-    (searchParams.get("order") as "asc" | "desc") || "asc"
+
+  // Default null untuk sort
+  const [sortField, setSortField] = useState<string | null>(
+    searchParams.get("sortBy") || null
   );
+  const [order, setOrder] = useState<"asc" | "desc" | null>(
+    (searchParams.get("order") as "asc" | "desc") || null
+  );
+
   const [totalPages, setTotalPages] = useState(1);
 
   const { data, loading, error, refetch } = useFetch<undefined, User>(
-    "/v1/user", // <- ini sesuai path API backend kamu
+    "/v1/user", // path API backend
     { method: "GET" }
   );
 
-  const updateUrlParams = (newPage: number, newSort: string, newOrder: string) => {
+  // Update URL sesuai state
+  const updateUrlParams = (
+    newPage: number,
+    newSort: string | null,
+    newOrder: "asc" | "desc" | null
+  ) => {
     const params = new URLSearchParams();
     params.set("page", String(newPage));
     params.set("limit", String(limit));
-    params.set("sortBy", newSort);
-    params.set("order", newOrder);
+    if (newSort) params.set("sortBy", newSort);
+    if (newOrder) params.set("order", newOrder);
     router.replace(`/v1/user?${params.toString()}`);
   };
 
-  const fetchData = (newPage = page, newSort = sortField, newOrder = order) => {
+  // Fetch data dari API
+  const fetchData = (
+    newPage = page,
+    newSort: string | null = sortField,
+    newOrder: "asc" | "desc" | null = order
+  ) => {
     updateUrlParams(newPage, newSort, newOrder);
 
-    refetch({
-      params: {
-        page: newPage,
-        limit,
-        sortBy: newSort,
-        order: newOrder,
-      },
-    });
+    const queryParams: Record<string, any> = {
+      page: newPage,
+      limit,
+    };
+    if (newSort) queryParams.sortBy = newSort;
+    if (newOrder) queryParams.order = newOrder;
+
+    refetch({ params: queryParams });
   };
 
+  // Trigger fetch saat page/sort berubah
   useEffect(() => {
     fetchData(page, sortField, order);
   }, [page, sortField, order]);
 
+  // Hitung total halaman
   useEffect(() => {
     if (data?.total) {
       setTotalPages(Math.ceil(data.total / limit));
@@ -75,7 +92,7 @@ export default function UserList() {
         onSortChange={(field, newOrder) => {
           setSortField(field);
           setOrder(newOrder);
-          setPage(1);
+          setPage(1); // reset page saat ganti sort
         }}
         currentPage={page}
         totalPages={totalPages}

@@ -13,13 +13,16 @@ export default function Tables() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Ambil default dari URL, atau fallback ke nilai awal
   const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
   const [limit] = useState(Number(searchParams.get("limit")) || 5);
-  const [sortField, setSortField] = useState(searchParams.get("sortBy") || "firstName");
-  const [order, setOrder] = useState<"asc" | "desc">(
-    (searchParams.get("order") as "asc" | "desc") || "asc"
+
+  const [sortField, setSortField] = useState<string | null>(
+    searchParams.get("sortBy") || null
   );
+  const [order, setOrder] = useState<"asc" | "desc" | null>(
+    (searchParams.get("order") as "asc" | "desc") || null
+  );
+
   const [totalPages, setTotalPages] = useState(1);
 
   const { data, loading, error, refetch } = useFetch<undefined, User>(
@@ -27,35 +30,39 @@ export default function Tables() {
     { method: "GET" }
   );
 
-  // Update URL Path sesuai perubahan
-  const updateUrlParams = (newPage: number, newSort: string, newOrder: string) => {
+  const updateUrlParams = (
+    newPage: number,
+    newSort: string | null,
+    newOrder: "asc" | "desc" | null
+  ) => {
     const params = new URLSearchParams();
     params.set("page", String(newPage));
     params.set("limit", String(limit));
-    params.set("sortBy", newSort);
-    params.set("order", newOrder);
+    if (newSort) params.set("sortBy", newSort);
+    if (newOrder) params.set("order", newOrder);
     router.replace(`/v1/tables?${params.toString()}`);
   };
 
-  // Fetch data API
-  const fetchData = (newPage = page, newSort = sortField, newOrder = order) => {
+  const fetchData = (
+    newPage = page,
+    newSort: string | null = sortField,
+    newOrder: "asc" | "desc" | null = order
+  ) => {
     updateUrlParams(newPage, newSort, newOrder);
-    refetch({
-      params: {
-        limit,
-        skip: (newPage - 1) * limit,
-        sortBy: newSort,
-        order: newOrder,
-      },
-    });
+    const queryParams: Record<string, any> = {
+      limit,
+      skip: (newPage - 1) * limit,
+    };
+    if (newSort) queryParams.sortBy = newSort;
+    if (newOrder) queryParams.order = newOrder;
+
+    refetch({ params: queryParams });
   };
 
-  // Fetch ketika state berubah
   useEffect(() => {
     fetchData();
   }, [page, sortField, order]);
 
-  // Hitung total pages
   useEffect(() => {
     if (data?.total) {
       setTotalPages(Math.ceil(data.total / limit));
@@ -82,13 +89,11 @@ export default function Tables() {
         onSortChange={(field, newOrder) => {
           setSortField(field);
           setOrder(newOrder);
-          setPage(1); // reset ke page 1 saat ganti sort
+          setPage(1);
         }}
         currentPage={page}
         totalPages={totalPages}
-        onPageChange={(newPage) => {
-          setPage(newPage);
-        }}
+        onPageChange={(newPage) => setPage(newPage)}
       />
     </div>
   );

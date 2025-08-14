@@ -7,9 +7,9 @@ import Pagination from "../pagination/Pagination";
 interface TableProps<T> {
   data: T[];
   columns: { key: keyof T; label: string }[];
-  currentSortField: string;
-  currentOrder: "asc" | "desc";
-  onSortChange: (field: string, order: "asc" | "desc") => void;
+  currentSortField: string | null;
+  currentOrder: "asc" | "desc" | null;
+  onSortChange: (field: string | null, order: "asc" | "desc" | null) => void;
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
