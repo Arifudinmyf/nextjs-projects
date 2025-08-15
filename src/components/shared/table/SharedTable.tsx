@@ -63,7 +63,7 @@ const TableShared = <T extends object>({
               <tr key={idx} className="hover:bg-gray-700">
                 {columns.map((col) => (
                   <td key={String(col.key)} className="p-2 border">
-                    {String(row[col.key])}
+                    {row[col.key] ? String(row[col.key]) : '-'}
                   </td>
                 ))}
               </tr>
