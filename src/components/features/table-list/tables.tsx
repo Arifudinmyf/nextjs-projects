@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { User } from "../user/model/user.model";
 import LottieAnimation from "@/components/shared/Lottie-animation/LottieAnimation";
 
-const animationData = require("@/public/lottie/document-hover-pinch.json");
+import animationData from "@/public/lottie/document-hover-pinch.json";
 
 export default function Tables() {
   const router = useRouter();
@@ -49,7 +49,7 @@ export default function Tables() {
     newOrder: "asc" | "desc" | null = order
   ) => {
     updateUrlParams(newPage, newSort, newOrder);
-    const queryParams: Record<string, any> = {
+    const queryParams: Record<string, string | number | undefined> = {
       limit,
       skip: (newPage - 1) * limit,
     };

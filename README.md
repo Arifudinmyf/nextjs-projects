@@ -35,3 +35,185 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 "# nextjs-projects" 
+
+## structur golang nitip
+
+## BE POBUS
+
+```bash
+po-bus-microservices/
+├── api-gateway/
+│   ├── cmd/
+│   │   └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   ├── handlers/
+│   │   ├── middleware/
+│   │   │   ├── auth.go
+│   │   │   ├── logging.go
+│   │   │   └── ratelimit.go
+│   │   └── routes/
+│   ├── pkg/
+│   │   └── kong/
+│   └── go.mod
+│
+├── auth-service/
+│   ├── cmd/
+│   │   └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── repositories/
+│   │   └── services/
+│   ├── pkg/
+│   │   ├── jwt/
+│   │   └── redis/
+│   ├── migrations/
+│   └── go.mod
+│
+├── user-service/
+│   ├── cmd/
+│   │   └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── repositories/
+│   │   └── services/
+│   ├── pkg/
+│   │   ├── database/
+│   │   └── kafka/
+│   ├── migrations/
+│   └── go.mod
+│
+├── admin-service/
+│   ├── cmd/
+│   │   └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── repositories/
+│   │   └── services/
+│   ├── pkg/
+│   │   ├── database/
+│   │   └── kafka/
+│   ├── migrations/
+│   └── go.mod
+│
+├── booking-service/
+│   ├── cmd/
+│   │   └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── repositories/
+│   │   └── services/
+│   ├── pkg/
+│   │   ├── database/
+│   │   ├── kafka/
+│   │   └── redis/
+│   ├── migrations/
+│   └── go.mod
+│
+├── payment-service/
+│   ├── cmd/
+│   │   └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── repositories/
+│   │   └── services/
+│   ├── pkg/
+│   │   ├── database/
+│   │   └── kafka/
+│   ├── migrations/
+│   └── go.mod
+│
+├── driver-service/
+│   ├── cmd/
+│   │   └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── repositories/
+│   │   └── services/
+│   ├── pkg/
+│   │   ├── database/
+│   │   └── kafka/
+│   ├── migrations/
+│   └── go.mod
+│
+├── shared/
+│   ├── config/
+│   │   └── config.go
+│   ├── database/
+│   │   ├── database.go
+│   │   └── migrations.go
+│   ├── kafka/
+│   │   ├── producer.go
+│   │   └── consumer.go
+│   ├── middleware/
+│   │   ├── auth.go
+│   │   ├── logging.go
+│   │   └── ratelimit.go
+│   ├── models/
+│   │   ├── base.go
+│   │   └── response.go
+│   ├── redis/
+│   │   └── redis.go
+│   ├── utils/
+│   │   ├── validator.go
+│   │   ├── error.go
+│   │   └── jwt.go
+│   └── go.mod
+│
+├── deployments/
+│   ├── docker/
+│   │   ├── api-gateway.Dockerfile
+│   │   ├── auth-service.Dockerfile
+│   │   ├── user-service.Dockerfile
+│   │   ├── admin-service.Dockerfile
+│   │   ├── booking-service.Dockerfile
+│   │   ├── payment-service.Dockerfile
+│   │   └── driver-service.Dockerfile
+│   ├── k8s/
+│   │   ├── api-gateway.yaml
+│   │   ├── auth-service.yaml
+│   │   ├── user-service.yaml
+│   │   ├── admin-service.yaml
+│   │   ├── booking-service.yaml
+│   │   ├── payment-service.yaml
+│   │   ├── driver-service.yaml
+│   │   ├── postgres.yaml
+│   │   ├── redis.yaml
+│   │   └── kafka.yaml
+│   └── docker-compose.yml
+│
+└── docs/
+    ├── api/
+    │   ├── auth-service.yaml
+    │   ├── user-service.yaml
+    │   ├── admin-service.yaml
+    │   ├── booking-service.yaml
+    │   ├── payment-service.yaml
+    │   └── driver-service.yaml
+    └── architecture.md
+
+```

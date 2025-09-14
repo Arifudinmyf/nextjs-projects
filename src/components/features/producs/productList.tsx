@@ -51,7 +51,7 @@ export default function UserList() {
   ) => {
     updateUrlParams(newPage, newSort, newOrder);
 
-    const queryParams: Record<string, any> = {
+    const queryParams: Record<string, string | number | undefined> = {
       page: newPage,
       limit,
     };
